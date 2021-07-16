@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="main-wrapper">
+  <section class="blog-list px-3 py-5 p-md-5">
+    <div class="container">
+      <div class="item mb-5">
+        <div class="media">
+            <div class="media-body">
+              <form action="login" method="post">
+                {% csrf_token %}
+                <div class="form-group mx-sm-3 mb-1 col-md-5">
+                  <label class="form-label">User Name</label><br>
+                  <input type="text" class="form-control" name="username" placeholder="username">
+                </div>
+                <div class="form-group mx-sm-3 mb-1 col-md-5">
+                  <label class="form-label">Password</label><br>
+                  <input type="password" class="form-control" name="password" placeholder="password">
+                </div>
+                <div class="form-group mx-sm-3 mb-1 col-md-2">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                <div class="mx-sm-3 mb-1 col-md-2">
+                  <a class="form-label" href="{% url 'accounts:register' %}">Not a user, click here to register</a>
+                </div>
+              </form>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

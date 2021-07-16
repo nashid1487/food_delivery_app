@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if not order_items %}
+    <div>
+        <div class="text-center">
+            <br>
+            <h2 class="text-center my_title">
+                Your shopping cart is empty.
+            </h2>
+            <br>
+            <p class="text-center">
+                To continue shopping please click <a href="{% url 'food_delivery:menu' %}">here</a>
+            </p>
+        </div>
+    </div>
+{% else %}
+    <div>
+        <div class="text-center">
+            <br>
+            <h2 class="text-center my_title">Your Cart</h2>
+            <br>
+        </div>
+    </div>
+    <div class="row mx-auto">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 text center">
+            <table class="table my_table">
+                <thead class="my_thead">
+                    <tr>
+                        <th colspan="5">Your Items</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order_item in order_items %}
+                        <tr>
+                            <td>
+                                <img src="{{order_item.food.image.url}}" class="float-left-rounded custom_image">
+                            </td>
+                            <td class="text-lef">
+                                {{order_item.food.name}}<br>
+                                ID : {{order_item.food.id}}<br>
+                                Price : ₹{{order_item.food.price}}<br>
+                                Quantity : {{order_item.quantity}} x ₹{{order_item.food.price}}
+                            </td>
+                            <td>
+                                ₹{{order_item.sub_total}}
+                            </td>
+                            <td>
+                                <a href="{% url 'orders:add_order' order_item.food.id %}" class="custom_a"><i class="fas fa-plus custom_icon"></i></a>&nbsp;
+                                <a href="{% url 'orders:remove_order' order_item.food.id %}"><i class="fas fa-minus custom_icon"></i></a>&nbsp;
+                                <a href="{% url 'orders:trash_order' order_item.food.id %}"><i class="fas fa-trash custom_icon"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+            <div>
+                <table class="table my_table">
+                    <thead class="my_thead">
+                        <tr>
+                        <th colspan="5">CheckOut</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Review the items before Checkout</td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Total : <strong>{{total}}</strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="mx-auto">
+                    <a href="{% url 'food_delivery:home' %}" class="btn btn-secondary bt-block my_button">Continue Shopping</a>
+                </div>
+            </div>
+        </div>
+    </div><br>
+{% endif %}
+{% endblock %}
